@@ -4,6 +4,7 @@
     "": {
       "name": "nlw-agents",
       "dependencies": {
+        "@sinclair/typebox": "^0.34.37",
         "elysia": "latest",
       },
       "devDependencies": {
