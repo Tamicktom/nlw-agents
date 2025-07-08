@@ -1,5 +1,5 @@
 //* Libraries imports
-import { count, ilike, or } from 'drizzle-orm';
+import { count, ilike } from 'drizzle-orm';
 import { Elysia, t } from 'elysia';
 
 //* Local imports
@@ -16,13 +16,13 @@ roomsRoutes.get(
     req.query.search = req.query.search || '';
 
     const roomsToWait = db
-      .select()
+      .select({
+        id: schema.rooms.id,
+        name: schema.rooms.name,
+      })
       .from(schema.rooms)
       .where(
-        or(
-          ilike(schema.rooms.name, `%${req.query.search}%`),
-          ilike(schema.rooms.description, `%${req.query.search}%`)
-        )
+        ilike(schema.rooms.name, `%${req.query.search}%`),
       )
       .orderBy(schema.rooms.createdAt)
       .limit(req.query.limit)
