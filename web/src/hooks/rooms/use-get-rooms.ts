@@ -16,7 +16,7 @@ const apiResponseSchema = z.object({
 
 async function getRooms() {
   const url = apiURL("/rooms");
-  console.log("url: ", url);
+
   const response = await fetch(url);
 
   const data = apiResponseSchema.parse(await response.json());
