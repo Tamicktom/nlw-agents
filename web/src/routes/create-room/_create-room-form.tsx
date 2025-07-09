@@ -7,6 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
+//* Hooks imports
+import { useStoreRooms } from "@/hooks/rooms/use-store-room";
+
 //* Schemas imports
 import { type Room, roomSchema } from "@/schemas/rooms";
 
@@ -20,10 +23,12 @@ const formOpts = formOptions({
 });
 
 export function CreateRoomForm() {
+	const storeRoom = useStoreRooms();
+
 	const form = useForm({
 		...formOpts,
 		onSubmit: async (submit) => {
-			console.log(submit);
+			storeRoom.mutate({ room: submit.value });
 		},
 		validators: {
 			onBlur: roomSchema,
@@ -82,7 +87,7 @@ export function CreateRoomForm() {
 				}}
 			</form.Field>
 
-			<Button type="submit" id="create-room" disabled={form.state.isSubmitting}>
+			<Button id="create-room" type="submit" disabled={form.state.isSubmitting}>
 				{form.state.isSubmitting ? "Criando..." : "Criar"}
 			</Button>
 		</form>

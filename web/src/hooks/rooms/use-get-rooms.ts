@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import z from "zod/v4";
 
+import { queryKeys } from "@/integrations/tanstack-query/root-provider";
 //* Local imports
 import { apiURL } from "@/utils/api";
 
@@ -26,7 +27,7 @@ async function getRooms() {
 
 export function useGetRooms() {
 	return useQuery({
-		queryKey: ["get-rooms"],
+		queryKey: [queryKeys.rooms.list],
 		queryFn: getRooms,
 		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
