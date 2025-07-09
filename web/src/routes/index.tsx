@@ -10,7 +10,7 @@ function App() {
     <div>
       Hello world
       <div className='flex flex-col gap-2'>
-        <Link to="/room">
+        <Link to="/room/$roomId" params={{ roomId: "" }}>
           Room
         </Link>
 

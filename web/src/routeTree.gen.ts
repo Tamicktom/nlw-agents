@@ -9,15 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RoomRouteImport } from './routes/room'
 import { Route as CreateRoomRouteImport } from './routes/create-room'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RoomRoomIdRouteImport } from './routes/room/$roomId'
 
-const RoomRoute = RoomRouteImport.update({
-  id: '/room',
-  path: '/room',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CreateRoomRoute = CreateRoomRouteImport.update({
   id: '/create-room',
   path: '/create-room',
@@ -28,46 +23,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoomRoomIdRoute = RoomRoomIdRouteImport.update({
+  id: '/room/$roomId',
+  path: '/room/$roomId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create-room': typeof CreateRoomRoute
-  '/room': typeof RoomRoute
+  '/room/$roomId': typeof RoomRoomIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/create-room': typeof CreateRoomRoute
-  '/room': typeof RoomRoute
+  '/room/$roomId': typeof RoomRoomIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/create-room': typeof CreateRoomRoute
-  '/room': typeof RoomRoute
+  '/room/$roomId': typeof RoomRoomIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create-room' | '/room'
+  fullPaths: '/' | '/create-room' | '/room/$roomId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create-room' | '/room'
-  id: '__root__' | '/' | '/create-room' | '/room'
+  to: '/' | '/create-room' | '/room/$roomId'
+  id: '__root__' | '/' | '/create-room' | '/room/$roomId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CreateRoomRoute: typeof CreateRoomRoute
-  RoomRoute: typeof RoomRoute
+  RoomRoomIdRoute: typeof RoomRoomIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/room': {
-      id: '/room'
-      path: '/room'
-      fullPath: '/room'
-      preLoaderRoute: typeof RoomRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/create-room': {
       id: '/create-room'
       path: '/create-room'
@@ -82,13 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/room/$roomId': {
+      id: '/room/$roomId'
+      path: '/room/$roomId'
+      fullPath: '/room/$roomId'
+      preLoaderRoute: typeof RoomRoomIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreateRoomRoute: CreateRoomRoute,
-  RoomRoute: RoomRoute,
+  RoomRoomIdRoute: RoomRoomIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
