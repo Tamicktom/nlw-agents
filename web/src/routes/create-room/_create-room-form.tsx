@@ -28,7 +28,14 @@ export function CreateRoomForm() {
 	const form = useForm({
 		...formOpts,
 		onSubmit: async (submit) => {
-			storeRoom.mutate({ room: submit.value });
+			storeRoom.mutate(
+				{ room: submit.value },
+				{
+					onSuccess: () => {
+						form.reset();
+					},
+				},
+			);
 		},
 		validators: {
 			onBlur: roomSchema,
