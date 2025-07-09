@@ -1,6 +1,8 @@
 //* Local imports
+import { questions } from "./questions";
 import { rooms } from "./rooms";
 
 export const schema = {
-  rooms
+  rooms,
+  questions
 }
