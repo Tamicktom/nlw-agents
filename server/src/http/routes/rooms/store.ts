@@ -22,6 +22,11 @@ storeRoom.post("/",
         description: rooms.description
       });
 
+    if (result.length === 0) {
+      req.set.status = 500;
+      throw new Error("something went wrong");
+    }
+
     return ({
       room: result[0]
     })
