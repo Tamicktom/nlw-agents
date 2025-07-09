@@ -22,13 +22,15 @@ storeRoom.post("/",
         description: rooms.description
       });
 
-    if (result.length === 0) {
+    const insertedRoom = result[0];
+
+    if (!insertedRoom) {
       req.set.status = 500;
       throw new Error("something went wrong");
     }
 
     return ({
-      room: result[0]
+      room: insertedRoom
     })
   },
   {
