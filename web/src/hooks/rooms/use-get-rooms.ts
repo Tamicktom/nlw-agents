@@ -5,17 +5,9 @@ import z from "zod";
 //* Local imports
 import { apiURL } from "@/utils/api";
 
-const paginatedRoomSchema = z.object({
-  id: z.string(),
-  name: z.string()
-});
-
-const pagination = z.object({
-  page: z.number(),
-  limit: z.number(),
-  totalItems: z.number(),
-  totalPages: z.number()
-});
+//* Schemas imports
+import { paginatedRoomSchema } from "@/schemas/rooms";
+import { pagination } from "@/schemas/pagination";
 
 const apiResponseSchema = z.object({
   rooms: paginatedRoomSchema.array(),
