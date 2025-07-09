@@ -6,7 +6,10 @@ import Card from "@/components/ui/card";
 import { RoomCard } from "./_room-card";
 
 export function RoomsList() {
-	const rooms = useGetRooms();
+	const rooms = useGetRooms({
+		page: 1,
+		limit: 20,
+	});
 
 	if (rooms.isLoading) return <CreateRoomLoading />;
 
