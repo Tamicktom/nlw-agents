@@ -10,7 +10,9 @@ import { roomsRoutes } from './http/routes/rooms';
 
 const server = new Elysia();
 
-server.use(cors());
+server.use(cors({
+  origin: "*"
+}));
 server.use(swagger());
 
 server.use(roomsRoutes);
