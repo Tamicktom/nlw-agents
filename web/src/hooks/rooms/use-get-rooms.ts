@@ -15,8 +15,20 @@ const apiResponseSchema = z.object({
 	pagination: pagination,
 });
 
-async function getRooms() {
-	const url = apiURL("/rooms");
+type GetRoomsProps = {
+	page?: number;
+	limit?: number;
+	search?: string;
+};
+
+async function getRooms(props: GetRoomsProps) {
+	const params = {
+		page: props.page || 1,
+		limit: props.limit || 10,
+		search: props.search || "",
+	};
+
+	const url = apiURL("/rooms", params);
 
 	const response = await fetch(url);
 
@@ -25,10 +37,10 @@ async function getRooms() {
 	return data;
 }
 
-export function useGetRooms() {
+export function useGetRooms(props: GetRoomsProps = {}) {
 	return useQuery({
 		queryKey: [queryKeys.rooms.list],
-		queryFn: getRooms,
+		queryFn: async () => await getRooms(props),
 		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
 }
