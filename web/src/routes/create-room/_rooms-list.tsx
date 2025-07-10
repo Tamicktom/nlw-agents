@@ -25,7 +25,7 @@ export function RoomsList() {
 			</Card.Header>
 
 			<Card.Content className="flex flex-col gap-3">
-				{rooms.data.rooms.map((room) => {
+				{rooms.data.rooms?.map((room) => {
 					const key = room.id;
 					return <RoomCard key={key} room={room} />;
 				})}
