@@ -10,7 +10,7 @@ import { apiURL } from "@/utils/api";
 import { pagination } from "@/schemas/pagination";
 import { paginatedQuestion } from "@/schemas/questions";
 
-const apiResponseSchema = paginatedQuestion.array()
+const apiResponseSchema = paginatedQuestion.array();
 
 type GetRoomsQuestionsProps = {
 	page?: number;
@@ -42,7 +42,7 @@ export function useGetRoomsQuestions(
 	props: GetRoomsQuestionsProps = {},
 ) {
 	return useQuery({
-		queryKey: [queryKeys.rooms.list],
+		queryKey: [queryKeys.rooms.questions.list, roomId],
 		queryFn: async () => await getRoomsQuestions(roomId, props),
 		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
