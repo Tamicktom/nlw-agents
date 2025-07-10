@@ -1,9 +1,11 @@
 //* Libraries imports
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import { Link, createFileRoute, useParams } from "@tanstack/react-router";
+import { ArrowLeftIcon } from "lucide-react";
 
 //* Components imports
-import Card from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { QuestionForm } from "./_question-form";
+import { QuestionsRoomList } from "./_question-room-list";
 
 export const Route = createFileRoute("/room/$roomId")({
 	component: RouteComponent,
@@ -18,29 +20,27 @@ function RouteComponent() {
 	const params = useParams({ from: "/room/$roomId" });
 
 	return (
-		<div>
-			<h1>Sala de perguntas</h1>
-			<span>Faça a sua pergunta e receba respostas com IA</span>
+		<div className="flex flex-col items-center justify-start p-4 min-h-svh bg-zinc-900">
+			<div className="max-w-4xl">
+				<div className="flex flex-row items-center justify-between w-full">
+					<Link to="/create-room">
+						<Button id="go-back" type="button" variant="outline">
+							<ArrowLeftIcon />
+							Voltar ao inicio
+						</Button>
+					</Link>
 
-			<Card.Root>
-				<Card.Header>
-					<Card.Title>Fazer uma pergunta</Card.Title>
-					<Card.Description>
-						Digite a sua pergunta abaixo para receber uma resposta gerado por IA
-					</Card.Description>
-				</Card.Header>
+					<Button id="record-audio" type="button" variant="secondary">
+						Gravar Áudio
+					</Button>
+				</div>
 
-				<Card.Content>
-					<QuestionForm />
-				</Card.Content>
-			</Card.Root>
+				<h1>Sala de perguntas</h1>
+				<span>Faça a sua pergunta e receba respostas com IA</span>
 
-      <div>
-        <h2>Perguntas & Respostas</h2>
-        <div>
-          
-        </div>
-      </div>
+				<QuestionForm roomId={params.roomId} />
+				<QuestionsRoomList roomId={params.roomId} />
+			</div>
 		</div>
 	);
 }
