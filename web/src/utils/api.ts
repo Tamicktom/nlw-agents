@@ -1,7 +1,7 @@
 //* Local imports
 import { env } from "@/env";
 
-type ValidRoutes = "/rooms";
+type ValidRoutes = "/rooms" | `/rooms/${string}/questions`;
 
 type Params = {
 	[key: string]: string | number;
