@@ -5,6 +5,9 @@ const queryClient = new QueryClient();
 export const queryKeys = {
 	rooms: {
 		list: "list-rooms",
+		questions: {
+			list: "list-questions"
+		}
 	},
 } as const;
 
