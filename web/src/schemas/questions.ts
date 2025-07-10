@@ -10,3 +10,11 @@ export const storeQuestion = z.object({
 });
 
 export type StoreQuestion = z.infer<typeof storeQuestion>;
+
+export const paginatedQuestion = z.object({
+	id: z.string(),
+	question: z.string(),
+	answer: z.string().nullable(),
+});
+
+export type PaginatedQuestion = z.infer<typeof paginatedQuestion>;
