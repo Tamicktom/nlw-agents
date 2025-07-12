@@ -34,7 +34,11 @@ export function QuestionForm(props: QuestionFormProps) {
 			onBlur: storeQuestion,
 		},
 		onSubmit: async (submit) => {
-			storeRoomQuestion.mutate(submit.value);
+			storeRoomQuestion.mutate(submit.value, {
+				onSuccess: () => {
+					form.reset();
+				},
+			});
 		},
 	});
 
