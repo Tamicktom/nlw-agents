@@ -21,7 +21,7 @@ function RouteComponent() {
 
 	return (
 		<div className="flex flex-col items-center justify-start p-4 min-h-svh bg-zinc-900">
-			<div className="max-w-4xl">
+			<div className="max-w-4xl w-full">
 				<div className="flex flex-row items-center justify-between w-full">
 					<Link to="/create-room">
 						<Button id="go-back" type="button" variant="outline">
@@ -35,8 +35,10 @@ function RouteComponent() {
 					</Button>
 				</div>
 
-				<h1>Sala de perguntas</h1>
-				<span>Faça a sua pergunta e receba respostas com IA</span>
+				<div className="w-full flex flex-col py-4">
+					<h1 className="text-2xl font-bold">Sala de perguntas</h1>
+					<span>Faça a sua pergunta e receba respostas com IA</span>
+				</div>
 
 				<QuestionForm roomId={params.roomId} />
 				<QuestionsRoomList roomId={params.roomId} />
