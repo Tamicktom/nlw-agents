@@ -77,14 +77,15 @@ export function QuestionForm(props: QuestionFormProps) {
 						}}
 					</form.Field>
 
-					<Button
-						id="create-question"
-						type="submit"
-						className="w-full"
-						disabled={form.state.isSubmitting}
-					>
-						{form.state.isSubmitting ? "Criando..." : "Criar pergunta"}
-					</Button>
+					<div className="w-full flex flex-row justify-end items-center">
+						<Button
+							id="create-question"
+							type="submit"
+							disabled={form.state.isSubmitting}
+						>
+							{form.state.isSubmitting ? "Criando..." : "Criar pergunta"}
+						</Button>
+					</div>
 				</form>
 			</Card.Content>
 		</Card.Root>

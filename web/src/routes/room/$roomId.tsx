@@ -40,8 +40,10 @@ function RouteComponent() {
 					<span>Faça a sua pergunta e receba respostas com IA</span>
 				</div>
 
-				<QuestionForm roomId={params.roomId} />
-				<QuestionsRoomList roomId={params.roomId} />
+				<div className="w-full flex flex-col gap-4">
+					<QuestionForm roomId={params.roomId} />
+					<QuestionsRoomList roomId={params.roomId} />
+				</div>
 			</div>
 		</div>
 	);
