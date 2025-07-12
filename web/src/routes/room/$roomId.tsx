@@ -30,9 +30,14 @@ function RouteComponent() {
 						</Button>
 					</Link>
 
-					<Button id="record-audio" type="button" variant="secondary">
-						Gravar Áudio
-					</Button>
+					<Link
+						to="/record-room-audio/$roomId"
+						params={{ roomId: params.roomId }}
+					>
+						<Button id="record-audio" type="button" variant="secondary">
+							Gravar Áudio
+						</Button>
+					</Link>
 				</div>
 
 				<div className="w-full flex flex-col py-4">
