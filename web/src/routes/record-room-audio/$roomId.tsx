@@ -5,6 +5,9 @@ import React from "react";
 //* Components imports
 import { Button } from "@/components/ui/button";
 
+//* Hooks
+import { useStoreAudioRecording } from "@/hooks/rooms/use-store-audio-recording";
+
 export const Route = createFileRoute("/record-room-audio/$roomId")({
 	component: RouteComponent,
 });
@@ -19,6 +22,20 @@ function RouteComponent() {
 	const recorder = React.useRef<MediaRecorder>(null);
 
 	const params = useParams({ from: "/record-room-audio/$roomId" });
+
+	const storeAudioRecording = useStoreAudioRecording(params.roomId);
+
+	const uploadAudio = (audio: Blob) => {
+		const audioFile = new File([audio], "audio-file");
+		storeAudioRecording.mutate(audioFile, {
+			onSuccess: () => {
+				console.log("deu bom em mandar o file");
+			},
+			onError: () => {
+				console.log("Deu ruim em mandar o file");
+			},
+		});
+	};
 
 	const stopRecording = async () => {
 		setIsRecording(false);
@@ -54,6 +71,7 @@ function RouteComponent() {
 			newRecorder.ondataavailable = (event) => {
 				if (event.data.size > 0) {
 					console.log(event.data);
+					uploadAudio(event.data);
 				}
 			};
 
