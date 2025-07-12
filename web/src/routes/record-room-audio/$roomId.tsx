@@ -26,8 +26,7 @@ function RouteComponent() {
 	const storeAudioRecording = useStoreAudioRecording(params.roomId);
 
 	const uploadAudio = (audio: Blob) => {
-		const audioFile = new File([audio], "audio-file");
-		storeAudioRecording.mutate(audioFile, {
+		storeAudioRecording.mutate(audio, {
 			onSuccess: () => {
 				console.log("deu bom em mandar o file");
 			},

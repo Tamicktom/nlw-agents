@@ -7,7 +7,7 @@ import { apiURL } from "@/utils/api";
 
 const apiResponseSchema = z.any();
 
-async function storeAudioRecording(roomId: string, audio: File) {
+async function storeAudioRecording(roomId: string, audio: Blob) {
 	const url = apiURL(`/rooms/${roomId}/audio-recording`);
 
 	const formData = new FormData();
@@ -28,6 +28,6 @@ async function storeAudioRecording(roomId: string, audio: File) {
 
 export function useStoreAudioRecording(roomId: string) {
 	return useMutation({
-		mutationFn: async (audio: File) => await storeAudioRecording(roomId, audio),
+		mutationFn: async (audio: Blob) => await storeAudioRecording(roomId, audio),
 	});
 }
