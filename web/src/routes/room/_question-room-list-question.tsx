@@ -36,10 +36,14 @@ export function QuestionRoomListQuestion(props: QuestionRoomListQuestionProps) {
 						<div>
 							{theresAnAnswer ? (
 								props.question.answer
-							) : (
+							) : props.question.isAnswering ? (
 								<span className="flex flex-row items-center gap-2 text-muted-foreground">
 									<LoaderCircleIcon className="animate-spin size-4" />
 									Esperando resposta...
+								</span>
+							) : (
+								<span className="flex flex-row items-center gap-2 text-muted-foreground">
+									Não há resposta para essa pergunta
 								</span>
 							)}
 						</div>

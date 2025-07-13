@@ -52,6 +52,7 @@ storeRoomQuestion.post(
       })
       .returning({
         id: schema.questions.id,
+        answer: schema.questions.answer
       });
 
     const storedQuestion = result[0];
@@ -63,7 +64,6 @@ storeRoomQuestion.post(
 
     return {
       question: storedQuestion,
-      answer,
     };
   },
   {
