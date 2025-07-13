@@ -7,6 +7,7 @@ const EnvSchema = t.Object({
   DATABASE_URL: t.String({
     default: "postgres://docker:docker@localhost:5432/agents",
   }),
+  GEMINI_API_KEY: t.String(),
 });
 
 export const env = Value.Decode(EnvSchema, process.env);
