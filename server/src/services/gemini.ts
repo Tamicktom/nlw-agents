@@ -10,7 +10,7 @@ const gemini = new GoogleGenAI({
 
 const model = "gemini-2.5-flash";
 
-export async function transcribeAudio(audioAsBase64: string, mimeType: string) {
+export async function transcribeAudio(audioAsBase64: string, mimeType: string): Promise<string> {
   const response = await gemini.models.generateContent({
     model,
     contents: [
@@ -47,4 +47,43 @@ export async function generateEmbeddings(text: string): Promise<number[]> {
   }
 
   return response.embeddings[0].values;
+}
+
+export async function generateAnswer(question: string, transcriptions: string[]) {
+  const context = transcriptions.join("\n\n");
+
+  const prompt = `Com base no texto fornecido abaixo como contexto, responda a pergunta em português de forma clara e concisa.
+  
+  <contexto>
+  ${context}
+  </contexto>
+
+  <pergunta>
+  ${question}
+  </pergunta>
+
+  <instruções>
+  - Use apenas informações contidas no contexto enviado;
+  - Se a resposta não for encontrada no contexto, apenas responda que não tem informações suficiêntes para responder;
+  - Seja objetivo;
+  - Mantenha um tom educativo e profissional;
+  - Cite trechos relevantes do contexto se apropriado;
+  - Se for citar o contexto, utilize o termo "conteúdo da aula"
+  </instruções>
+  `.trim();
+
+  const response = await gemini.models.generateContent({
+    model,
+    contents: [
+      {
+        text: prompt
+      }
+    ]
+  });
+
+  if (!response.text) {
+    throw new Error("Falha ao gerar resposta pelo Gemini.");
+  }
+
+  return response.text;
 }
