@@ -17,8 +17,6 @@ storeRoomQuestion.post(
     const embeddings = await generateEmbeddings(req.body.question);
     const embeddingsAsString = `[${embeddings.join(',')}]`;
 
-    // const similarityScore = sql<number>`1 - (${schema.audioChunks.embeddings} <=> ${embeddingsAsString}::vector)`;
-
     const chunks = await db
       .select({
         id: schema.audioChunks.id,
