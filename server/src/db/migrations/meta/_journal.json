@@ -15,6 +15,13 @@
       "when": 1752076002870,
       "tag": "0001_massive_smasher",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752420258712,
+      "tag": "0002_regular_unus",
+      "breakpoints": true
     }
   ]
 }
