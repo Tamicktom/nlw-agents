@@ -66,6 +66,7 @@ export function QuestionForm(props: QuestionFormProps) {
 									<Label htmlFor="question-text">Sua Pergunta</Label>
 									<Textarea
 										id="question-test"
+										disabled={storeRoomQuestion.isPending}
 										value={field.state.value}
 										onBlur={field.handleBlur}
 										onChange={(e) => field.handleChange(e.target.value)}
@@ -85,7 +86,7 @@ export function QuestionForm(props: QuestionFormProps) {
 						<Button
 							id="create-question"
 							type="submit"
-							disabled={form.state.isSubmitting}
+							disabled={storeRoomQuestion.isPending}
 						>
 							{form.state.isSubmitting ? "Criando..." : "Criar pergunta"}
 						</Button>
