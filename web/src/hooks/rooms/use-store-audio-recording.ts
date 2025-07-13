@@ -21,8 +21,6 @@ async function storeAudioRecording(roomId: string, audio: Blob) {
 
 	const data = apiResponseSchema.parse(await response.json());
 
-	console.log(data);
-
 	return data;
 }
 

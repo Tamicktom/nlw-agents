@@ -20,24 +20,54 @@ const isRecordingSuppoerted =
 function RouteComponent() {
 	const [isRecording, setIsRecording] = React.useState(false);
 	const recorder = React.useRef<MediaRecorder>(null);
+	const intervalRef = React.useRef<number>(null);
 
 	const params = useParams({ from: "/record-room-audio/$roomId" });
 
 	const storeAudioRecording = useStoreAudioRecording(params.roomId);
 
 	const uploadAudio = (audio: Blob) => {
-		storeAudioRecording.mutate(audio, {
-			onSuccess: () => {
-				console.log("deu bom em mandar o file");
-			},
-			onError: () => {
-				console.log("Deu ruim em mandar o file");
+		storeAudioRecording.mutate(audio);
+	};
+
+	const createRecorder = async () => {
+		const audio = await navigator.mediaDevices.getUserMedia({
+			audio: {
+				echoCancellation: true,
+				noiseSuppression: true,
+				sampleRate: 44_100,
 			},
 		});
+
+		const newRecorder = new MediaRecorder(audio, {
+			mimeType: "audio/webm",
+			audioBitsPerSecond: 64_000,
+		});
+
+		newRecorder.ondataavailable = (event) => {
+			if (event.data.size > 0) {
+				console.log(event.data);
+				uploadAudio(event.data);
+			}
+		};
+
+		newRecorder.onstart = () => {
+			console.log("Gravação iniciada!");
+		};
+
+		newRecorder.onstop = () => {
+			console.log("Gravação pausada");
+		};
+
+		return newRecorder;
 	};
 
 	const stopRecording = async () => {
 		setIsRecording(false);
+
+		if (intervalRef.current) {
+			clearInterval(intervalRef.current);
+		}
 
 		if (recorder.current) {
 			recorder.current.stop();
@@ -53,37 +83,13 @@ function RouteComponent() {
 		setIsRecording(true);
 
 		if (!recorder.current) {
-			console.log("new recorder sendo criado");
-			const audio = await navigator.mediaDevices.getUserMedia({
-				audio: {
-					echoCancellation: true,
-					noiseSuppression: true,
-					sampleRate: 44_100,
-				},
-			});
+			recorder.current = await createRecorder();
 
-			const newRecorder = new MediaRecorder(audio, {
-				mimeType: "audio/webm",
-				audioBitsPerSecond: 64_000,
-			});
-
-			newRecorder.ondataavailable = (event) => {
-				if (event.data.size > 0) {
-					console.log(event.data);
-					uploadAudio(event.data);
-				}
-			};
-
-			newRecorder.onstart = () => {
-				console.log("Gravação iniciada!");
-			};
-
-			newRecorder.onstop = () => {
-				console.log("Gravação pausada");
-			};
-
-			recorder.current = newRecorder;
-			recorder.current.start();
+			intervalRef.current = setInterval(() => {
+				console.log("resetting...");
+				recorder.current?.stop();
+				recorder.current?.start();
+			}, 10_000);
 		} else {
 			console.log("Recorder from cache");
 			recorder.current.start();
